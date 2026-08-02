@@ -24,7 +24,7 @@ async function tryRefreshToken(): Promise<string | null> {
   if (!refreshToken) return null;
 
   try {
-    const res = await fetch(`${API_BASE_URL}/auth/refresh-token`, {
+    const res = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export async function apiFetch<T>(
     if (auth && token) {
       headers.Authorization = `Bearer ${token}`;
     }
-    return fetch(`${API_BASE_URL}${path}`, {
+    return fetch(`${API_BASE_URL}/api${path}`, {
       ...init,
       headers,
       cache: init.cache ?? "no-store",
