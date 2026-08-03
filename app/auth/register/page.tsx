@@ -4,7 +4,13 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { Home, User, Building2 } from "lucide-react";
 import { registerAction, ActionState } from "@/actions/auth.actions";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/submit-button";
@@ -28,7 +34,9 @@ export default function RegisterPage() {
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="text-2xl">Create your account</CardTitle>
-          <CardDescription>Join RentNest as a tenant or a landlord.</CardDescription>
+          <CardDescription>
+            Join RentNest as a tenant or a landlord.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form action={formAction} className="space-y-4">
@@ -60,7 +68,13 @@ export default function RegisterPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="you@example.com" required />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
@@ -68,15 +82,28 @@ export default function RegisterPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" placeholder="At least 6 characters" required />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="At least 6 characters"
+                required
+              />
             </div>
-            <SubmitButton className="w-full" size="lg" pendingText="Creating account...">
+            <SubmitButton
+              className="w-full"
+              size="lg"
+              pendingText="Creating account..."
+            >
               Create account
             </SubmitButton>
           </form>
           <p className="text-muted-foreground mt-6 text-center text-sm">
             Already have an account?{" "}
-            <Link href="/auth/login" className="text-primary font-medium hover:underline">
+            <Link
+              href="/auth/login"
+              className="text-primary font-medium hover:underline"
+            >
               Log in
             </Link>
           </p>
@@ -108,7 +135,9 @@ function RoleOption({
         active ? "border-primary bg-accent" : "hover:bg-muted",
       )}
     >
-      <div className={cn(active ? "text-primary" : "text-muted-foreground")}>{icon}</div>
+      <div className={cn(active ? "text-primary" : "text-muted-foreground")}>
+        {icon}
+      </div>
       <p className="text-sm font-medium">{label}</p>
       <p className="text-muted-foreground text-xs">{desc}</p>
     </button>
