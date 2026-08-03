@@ -29,14 +29,16 @@ export default async function PropertiesPage({ searchParams }: PageProps) {
     }),
   ]);
 
-  const totalPages = meta?.totalPages ?? Math.ceil((meta?.total ?? 0) / limit) ?? 1;
+  const totalPages =
+    meta?.totalPages ?? Math.ceil((meta?.total ?? 0) / limit) ?? 1;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Browse properties</h1>
         <p className="text-muted-foreground mt-1">
-          {meta?.total ?? properties.length} propert{(meta?.total ?? properties.length) === 1 ? "y" : "ies"} found
+          {meta?.total ?? properties.length} propert
+          {(meta?.total ?? properties.length) === 1 ? "y" : "ies"} found
         </p>
       </div>
 
