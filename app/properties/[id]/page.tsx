@@ -47,10 +47,14 @@ export default async function PropertyDetailPage({
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="mb-2 flex items-center gap-2">
-            {property.category?.name && <Badge variant="secondary">{property.category.name}</Badge>}
+            {property.category?.name && (
+              <Badge variant="secondary">{property.category.name}</Badge>
+            )}
             <PropertyStatusBadge status={property.status} />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">{property.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {property.title}
+          </h1>
           <p className="text-muted-foreground mt-1 flex items-center gap-1">
             <MapPin className="size-4" />
             {property.location}
@@ -60,7 +64,10 @@ export default async function PropertyDetailPage({
         <div className="text-right">
           <p className="text-primary text-3xl font-bold">
             {formatCurrency(property.price)}
-            <span className="text-muted-foreground text-base font-normal"> /mo</span>
+            <span className="text-muted-foreground text-base font-normal">
+              {" "}
+              /mo
+            </span>
           </p>
           {reviews.length > 0 && (
             <div className="mt-1 flex items-center justify-end gap-1.5">
@@ -73,13 +80,24 @@ export default async function PropertyDetailPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-2 overflow-hidden rounded-xl">
-        <div className="relative col-span-4 aspect-[16/9] sm:col-span-3 sm:row-span-2 sm:aspect-auto">
-          <Image src={images[0]} alt={property.title} fill className="object-cover" priority />
+      <div className="grid grid-cols-4 gap-2 overflow-hidden rounded-xl sm:h-[480px]">
+        <div className="relative col-span-4 aspect-[16/9] sm:col-span-3 sm:row-span-2 sm:aspect-auto sm:h-full">
+          <Image
+            src={images[0]}
+            alt={property.title}
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
         {images.slice(1, 3).map((img, i) => (
-          <div key={i} className="relative hidden aspect-square sm:block">
-            <Image src={img} alt={`${property.title} ${i + 2}`} fill className="object-cover" />
+          <div key={i} className="relative hidden sm:block sm:h-full">
+            <Image
+              src={img}
+              alt={`${property.title} ${i + 2}`}
+              fill
+              className="object-cover"
+            />
           </div>
         ))}
       </div>
@@ -87,10 +105,22 @@ export default async function PropertyDetailPage({
       <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
           <div className="flex flex-wrap gap-6 rounded-xl border p-5">
-            <Stat icon={<BedDouble className="size-5" />} label="Bedrooms" value={property.bedrooms} />
-            <Stat icon={<Bath className="size-5" />} label="Bathrooms" value={property.bathrooms} />
+            <Stat
+              icon={<BedDouble className="size-5" />}
+              label="Bedrooms"
+              value={property.bedrooms}
+            />
+            <Stat
+              icon={<Bath className="size-5" />}
+              label="Bathrooms"
+              value={property.bathrooms}
+            />
             {property.area && (
-              <Stat icon={<Ruler className="size-5" />} label="Area" value={property.area} />
+              <Stat
+                icon={<Ruler className="size-5" />}
+                label="Area"
+                value={property.area}
+              />
             )}
           </div>
 
@@ -132,8 +162,12 @@ export default async function PropertyDetailPage({
             <CardContent className="space-y-4">
               <div className="flex items-center gap-3">
                 <Avatar className="size-12">
-                  <AvatarImage src={property.landlord?.avatarUrl ?? undefined} />
-                  <AvatarFallback>{initials(property.landlord?.name ?? "L")}</AvatarFallback>
+                  <AvatarImage
+                    src={property.landlord?.avatarUrl ?? undefined}
+                  />
+                  <AvatarFallback>
+                    {initials(property.landlord?.name ?? "L")}
+                  </AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="font-medium">{property.landlord?.name}</p>
