@@ -37,7 +37,13 @@ export function PropertyForm({
     <form action={formAction} className="space-y-5">
       <div className="space-y-2">
         <Label htmlFor="title">Title *</Label>
-        <Input id="title" name="title" defaultValue={property?.title} placeholder="Sunny 2BR near downtown" required />
+        <Input
+          id="title"
+          name="title"
+          defaultValue={property?.title}
+          placeholder="Sunny 2BR near downtown"
+          required
+        />
       </div>
 
       <div className="space-y-2">
@@ -55,7 +61,14 @@ export function PropertyForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="price">Price per month (USD) *</Label>
-          <Input id="price" name="price" type="number" min={0} defaultValue={property?.price} required />
+          <Input
+            id="price"
+            name="price"
+            type="number"
+            min={0}
+            defaultValue={property?.price}
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="categoryId">Category *</Label>
@@ -78,7 +91,13 @@ export function PropertyForm({
       <div className="grid grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="location">Location *</Label>
-          <Input id="location" name="location" defaultValue={property?.location} placeholder="Street / neighborhood" required />
+          <Input
+            id="location"
+            name="location"
+            defaultValue={property?.location}
+            placeholder="Street / neighborhood"
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="city">City</Label>
@@ -86,18 +105,35 @@ export function PropertyForm({
         </div>
         <div className="space-y-2">
           <Label htmlFor="area">Area (sq ft)</Label>
-          <Input id="area" name="area" defaultValue={property?.area ?? ""} placeholder="e.g. 950 sqft" />
+          <Input
+            id="area"
+            name="area"
+            defaultValue={property?.area ?? ""}
+            placeholder="e.g. 950 sqft"
+          />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="bedrooms">Bedrooms</Label>
-          <Input id="bedrooms" name="bedrooms" type="number" min={0} defaultValue={property?.bedrooms ?? 1} />
+          <Input
+            id="bedrooms"
+            name="bedrooms"
+            type="number"
+            min={0}
+            defaultValue={property?.bedrooms ?? 1}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="bathrooms">Bathrooms</Label>
-          <Input id="bathrooms" name="bathrooms" type="number" min={0} defaultValue={property?.bathrooms ?? 1} />
+          <Input
+            id="bathrooms"
+            name="bathrooms"
+            type="number"
+            min={0}
+            defaultValue={property?.bathrooms ?? 1}
+          />
         </div>
       </div>
 
@@ -125,9 +161,15 @@ export function PropertyForm({
       <div className="flex items-center justify-between rounded-lg border p-3">
         <div>
           <Label htmlFor="isAvailable">Available for rent</Label>
-          <p className="text-muted-foreground text-xs">Turn off to hide this listing temporarily.</p>
+          <p className="text-muted-foreground text-xs">
+            Turn off to hide this listing temporarily.
+          </p>
         </div>
-        <Switch id="isAvailable" name="isAvailable" defaultChecked={property?.isAvailable ?? true} />
+        <Switch
+          id="isAvailable"
+          name="isAvailable"
+          defaultChecked={property?.isAvailable ?? true}
+        />
       </div>
 
       <SubmitButton size="lg" pendingText="Saving...">
