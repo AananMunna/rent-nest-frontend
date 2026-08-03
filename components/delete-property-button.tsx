@@ -17,7 +17,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { deletePropertyAction } from "@/actions/property.actions";
 
-export function DeletePropertyButton({ propertyId, title }: { propertyId: string; title: string }) {
+export function DeletePropertyButton({
+  propertyId,
+  title,
+}: {
+  propertyId: string;
+  title: string;
+}) {
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {
@@ -34,7 +40,11 @@ export function DeletePropertyButton({ propertyId, title }: { propertyId: string
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="icon" className="text-destructive hover:text-destructive">
+        <Button
+          variant="outline"
+          size="icon"
+          className="text-destructive hover:text-destructive"
+        >
           <Trash2 className="size-4" />
         </Button>
       </AlertDialogTrigger>
@@ -42,7 +52,8 @@ export function DeletePropertyButton({ propertyId, title }: { propertyId: string
         <AlertDialogHeader>
           <AlertDialogTitle>Delete &ldquo;{title}&rdquo;?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently remove the listing. This action cannot be undone.
+            This will permanently remove the listing. This action cannot be
+            undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
