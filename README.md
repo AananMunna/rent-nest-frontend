@@ -1,104 +1,114 @@
-# RentNest — Frontend
+# RentNest Frontend
 
-Next.js 16 (App Router) frontend for the RentNest rental marketplace, built to consume
-your existing `rent-nest-backend` Express/Prisma API.
+RentNest Frontend is a Next.js 16 application for a rental marketplace. It provides the public browsing experience, role-based dashboards, and server-driven communication with the RentNest backend API.
 
-## Stack
+## Overview
 
-- **Next.js 16** App Router — no `src` directory, everything under `app/`
-- **Server Components + Server Actions** for all data fetching and mutations (no client-side
-  API calls, no React Query/SWR — the backend is only ever called from the server)
-- **Tailwind CSS v4** + a hand-built shadcn/ui-style component kit (Radix primitives under
-  `components/ui/`)
-- **TypeScript**, `react-hook-form`/`zod` available if you want to extend validation
+This project is built as a frontend-for-backend layer around the RentNest API. Data fetching and mutations are handled through server actions and server components, while session state is stored in httpOnly cookies on the Next.js domain.
 
-## Architecture: Next.js as a BFF
+The application includes:
 
-Instead of relying on cross-domain cookies (which is what broke login for you originally —
-`SameSite=None` requires HTTPS), this frontend stores the backend's `accessToken` /
-`refreshToken` in **its own httpOnly cookies** on the Next.js domain, and forwards
-`Authorization: Bearer <token>` when calling your Express API from server actions/components.
+- public property discovery and detail pages
+- tenant, landlord, and admin dashboards
+- authentication flows for login and registration
+- rental request management and payment flows
+- profile management and moderation tools
 
-- `lib/session.ts` — reads/writes the Next.js-side session cookies
-- `lib/api.ts` — server-only fetch wrapper (`apiFetch`) that attaches the bearer token and
-  auto-refreshes it on a 401 using your `/auth/refresh-token` endpoint
-- `middleware.ts` — decodes the JWT (no signature check, just for UX) to gate `/dashboard/*`
-  routes by role and redirect logged-in users away from `/auth/*`
+## Tech Stack
 
-This means: **the browser never talks to your Express backend directly.** All requests go
-`Browser → Next.js server → Express API`. You don't need to touch your backend's CORS/cookie
-config at all for this frontend to work — just make sure `NEXT_PUBLIC_API_BASE_URL` points at
-it.
+- Next.js 16 with the App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Radix UI primitives
+- React Hook Form and Zod
+- Sonner for notifications
 
-## Getting started
+## Project Structure
+
+```text
+app/          Application routes, layouts, and pages
+actions/      Server actions for API communication
+components/   Shared UI and feature components
+lib/          API client, session helpers, and utilities
+middleware.ts Route protection and auth redirects
+types/        Shared TypeScript types
+public/       Static assets
+```
+
+## Main Routes
+
+- `/` Home page with featured listings and search
+- `/properties` Property catalog with filters and pagination
+- `/properties/[id]` Property details, reviews, and rental request flow
+- `/auth/login` and `/auth/register` Authentication pages
+- `/dashboard/tenant` Tenant dashboard
+- `/dashboard/landlord` Landlord dashboard and property management
+- `/dashboard/admin` Admin dashboard and moderation tools
+- `/dashboard/profile` Shared profile settings
+- `/payments` Payment return page
+
+## How It Works
+
+The frontend communicates with the backend through a server-side API layer:
+
+- `lib/api.ts` attaches access tokens and refreshes them when needed
+- `lib/session.ts` manages auth cookies for the Next.js application
+- `middleware.ts` protects dashboard routes and handles role-based redirects
+
+This approach keeps browser-to-backend traffic out of the client and centralizes auth handling in the Next.js app.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20 or newer
+- npm
+- A running RentNest backend API
+
+### Installation
 
 ```bash
 npm install
-cp .env.example .env.local   # adjust NEXT_PUBLIC_API_BASE_URL if needed
+```
+
+### Environment Variables
+
+Create a local environment file and set the backend URL:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api
+```
+
+If the variable is omitted, the app falls back to `http://localhost:5000/api`.
+
+### Development
+
+```bash
 npm run dev
 ```
 
-Make sure your backend is running (default expected at `http://localhost:5000/api`) and that
-you've seeded at least one `Category` — property creation requires a category to exist
-(`/dashboard/admin/categories` lets an admin add one, or create it directly via your API/DB).
+The app will start in development mode with Next.js.
 
-## Folder structure
+### Production Build
 
-```
-app/
-  layout.tsx, globals.css        # root shell, theme tokens
-  page.tsx                       # home
-  properties/                    # public browse + detail
-  auth/login, auth/register/     # auth forms (client components, useActionState)
-  payments/                      # Stripe success/cancel landing page
-  dashboard/
-    layout.tsx                   # role-aware sidebar shell
-    profile/                     # shared profile settings
-    tenant/                      # rental requests + payment history
-    landlord/                    # overview, properties CRUD, requests
-    admin/                       # overview, users, properties, rentals, categories
-actions/                         # "use server" — one file per resource, talks to the API
-components/
-  ui/                            # shadcn-style primitives (button, card, dialog, table...)
-  *.tsx                          # feature components (property-card, property-form, ...)
-lib/
-  api.ts                         # server fetch wrapper + auto refresh
-  session.ts                     # cookie helpers
-  utils.ts                       # cn(), formatCurrency, formatDate
-types/index.ts                  # types mirroring your Prisma schema
-middleware.ts                    # role-based route protection
+```bash
+npm run build
+npm run start
 ```
 
-## Routes implemented
+### Linting
 
-| Route | Notes |
-|---|---|
-| `/` | Hero, search, featured properties |
-| `/properties` | Filters (search, category, price, sort) + pagination |
-| `/properties/[id]` | Gallery, amenities, reviews, "Request to Rent" dialog |
-| `/auth/login`, `/auth/register` | Role selection on register (Tenant/Landlord) |
-| `/dashboard/tenant` | Rental requests (Pay Now / Leave a review) + payment history tabs |
-| `/dashboard/landlord` | Stats overview |
-| `/dashboard/landlord/properties` | List, availability toggle, delete, edit |
-| `/dashboard/landlord/properties/new`, `/[id]/edit` | Property form |
-| `/dashboard/landlord/requests` | Approve / reject incoming requests |
-| `/dashboard/admin` | Platform stats |
-| `/dashboard/admin/users` | Table, search, pagination, ban/unban |
-| `/dashboard/admin/properties`, `/rentals` | Moderation tables |
-| `/dashboard/admin/categories` | Create/delete categories |
-| `/dashboard/profile` | Shared profile editor (all roles) |
-| `/payments` | Stripe success/cancel landing (matches your backend's redirect URL) |
+```bash
+npm run lint
+```
 
-## Notes / things to double check against your backend
+## Notes
 
-- Your uploaded backend zip didn't yet include the `/auth/logout` route we discussed adding —
-  the logout button calls it but silently ignores a failure, so it still works either way
-  (it clears the local session cookies regardless).
-- Admin endpoints (`/admin/users`, `/admin/properties`, `/admin/rentals`) and category
-  create/delete are assumed at the paths your `admin.route.ts` / `category.route.ts` expose —
-  adjust `actions/admin.actions.ts` / `actions/category.actions.ts` if your final route names
-  differ.
-- Stripe checkout: `startCheckoutAction` calls `POST /payments/create` and redirects to the
-  returned `gatewayUrl`. The `/payments` page confirms the payment via
-  `POST /payments/confirm` on return, matching your backend's redirect
-  (`/payments?success=true&paymentId=...`).
+- The backend must be available before authentication and dashboard actions will work.
+- Some pages expect seeded data, especially categories for property creation.
+- Payment flows are designed to match the backend's checkout and confirmation endpoints.
+
+## License
+
+No license has been specified for this repository.
