@@ -6,7 +6,10 @@ import { Category } from "@/types";
 import { ActionState } from "@/actions/auth.actions";
 
 export async function getCategories() {
-  const res = await apiFetch<Category[]>("/categories", { auth: false });
+  const res = await apiFetch<Category[]>("/categories", {
+    auth: false,
+    cache: "force-cache",
+  });
   return res.data;
 }
 

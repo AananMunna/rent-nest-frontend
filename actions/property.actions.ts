@@ -21,12 +21,18 @@ export interface PropertyFilters {
 
 export async function getProperties(filters: PropertyFilters = {}) {
   const qs = toQueryString(filters as Record<string, unknown>);
-  const res = await apiFetch<Property[]>(`/properties${qs}`, { auth: false });
+  const res = await apiFetch<Property[]>(`/properties${qs}`, {
+    auth: false,
+    cache: "force-cache",
+  });
   return { data: res.data, meta: res.meta as ApiMeta };
 }
 
 export async function getPropertyById(id: string) {
-  const res = await apiFetch<Property>(`/properties/${id}`, { auth: false });
+  const res = await apiFetch<Property>(`/properties/${id}`, {
+    auth: false,
+    cache: "force-cache",
+  });
   return res.data;
 }
 
