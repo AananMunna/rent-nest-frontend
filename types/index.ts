@@ -1,6 +1,10 @@
 export type Role = "TENANT" | "LANDLORD" | "ADMIN";
 export type ActiveStatus = "ACTIVE" | "BLOCKED";
-export type PropertyStatus = "AVAILABLE" | "RESERVED" | "UNAVAILABLE" | "ARCHIVED";
+export type PropertyStatus =
+  | "AVAILABLE"
+  | "RESERVED"
+  | "UNAVAILABLE"
+  | "ARCHIVED";
 export type RentalRequestStatus =
   | "PENDING"
   | "APPROVED"
