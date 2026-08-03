@@ -21,7 +21,9 @@ export function PropertyFilters({ categories }: { categories: Category[] }) {
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
 
-  const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") ?? "");
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("searchTerm") ?? "",
+  );
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") ?? "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
 
@@ -47,7 +49,10 @@ export function PropertyFilters({ categories }: { categories: Category[] }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="sticky top-20 space-y-6 rounded-xl border p-5">
+    <form
+      onSubmit={handleSubmit}
+      className="sticky top-20 space-y-6 rounded-xl border p-5"
+    >
       <div className="flex items-center gap-2 font-semibold">
         <SlidersHorizontal className="size-4" />
         Filters
@@ -73,7 +78,7 @@ export function PropertyFilters({ categories }: { categories: Category[] }) {
           value={searchParams.get("categoryId") ?? "all"}
           onValueChange={(v) => updateParam("categoryId", v === "all" ? "" : v)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full" type="button">
             <SelectValue placeholder="All categories" />
           </SelectTrigger>
           <SelectContent>
@@ -112,7 +117,7 @@ export function PropertyFilters({ categories }: { categories: Category[] }) {
           value={searchParams.get("sortBy") ?? "createdAt"}
           onValueChange={(v) => updateParam("sortBy", v)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger type="button" className="w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
