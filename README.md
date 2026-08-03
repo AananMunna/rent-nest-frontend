@@ -74,13 +74,15 @@ npm install
 
 ### Environment Variables
 
-Create a local environment file and set the backend URL:
+Create a local environment file and set the backend URL root:
 
 ```bash
-NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
 ```
 
-If the variable is omitted, the app falls back to `http://localhost:5000/api`.
+If the variable is omitted, the app falls back to `http://localhost:5000`.
+
+You can also point it to a deployed backend URL. The frontend will normalize the value, so both `https://example.com` and `https://example.com/api` will work.
 
 ### Development
 
@@ -108,6 +110,7 @@ npm run lint
 - The backend must be available before authentication and dashboard actions will work.
 - Some pages expect seeded data, especially categories for property creation.
 - Payment flows are designed to match the backend's checkout and confirmation endpoints.
+- If the backend is deployed on a free/serverless tier, the first request after inactivity may be slow because of cold starts. That is hosting behavior, not a frontend bug.
 
 ## License
 

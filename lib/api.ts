@@ -7,8 +7,13 @@ import {
   clearSession,
 } from "@/lib/session";
 
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000/api";
+function normalizeApiBaseUrl(value: string) {
+  return value.replace(/\/+$/, "").replace(/\/api$/, "");
+}
+
+export const API_BASE_URL = normalizeApiBaseUrl(
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000",
+);
 
 export class ApiError extends Error {
   statusCode: number;
@@ -74,7 +79,7 @@ export async function apiFetch<T>(
     });
   };
 
-  let token = auth ? await getAccessToken() : undefined;
+  const token = auth ? await getAccessToken() : undefined;
   let res = await doFetch(token);
 
   if (res.status === 401 && auth && token) {
