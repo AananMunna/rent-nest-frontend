@@ -1,12 +1,19 @@
 import Link from "next/link";
 import { CheckCircle2, XCircle } from "lucide-react";
-import { confirmPaymentAction, getPaymentById } from "@/actions/payment.actions";
+import {
+  confirmPaymentAction,
+  getPaymentById,
+} from "@/actions/payment.actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
 
 interface PageProps {
-  searchParams: Promise<{ success?: string; canceled?: string; paymentId?: string }>;
+  searchParams: Promise<{
+    success?: string;
+    canceled?: string;
+    paymentId?: string;
+  }>;
 }
 
 export default async function PaymentResultPage({ searchParams }: PageProps) {
