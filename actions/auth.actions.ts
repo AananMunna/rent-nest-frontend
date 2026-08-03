@@ -118,7 +118,7 @@ export async function requireUser(allowed?: Role[]) {
   const user = await getCurrentUser();
   if (!user) redirect("/auth/login");
   if (allowed && !allowed.includes(user.role)) {
-    redirect("/");
+    redirect("/unauthorized");
   }
   return user;
 }

@@ -6,6 +6,9 @@ const ROLE_HOME: Record<string, string> = {
   ADMIN: "/dashboard/admin",
 };
 
+const ACCESS_COOKIE = "rn_access_token";
+const REFRESH_COOKIE = "rn_refresh_token";
+
 function decodeRole(token: string): string | null {
   try {
     const payload = token.split(".")[1];
@@ -26,22 +29,25 @@ export function middleware(req: NextRequest) {
   const isAuthRoute = pathname.startsWith("/auth");
   const isDashboardRoute = pathname.startsWith("/dashboard");
 
-  if (isDashboardRoute && !token) {
+  if (isDashboardRoute && (!token || !role)) {
     const url = req.nextUrl.clone();
     url.pathname = "/auth/login";
     url.searchParams.set("next", pathname);
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    response.cookies.delete(ACCESS_COOKIE);
+    response.cookies.delete(REFRESH_COOKIE);
+    return response;
   }
 
   if (isDashboardRoute && role) {
     if (pathname.startsWith("/dashboard/tenant") && role !== "TENANT") {
-      return NextResponse.redirect(new URL(ROLE_HOME[role] ?? "/", req.url));
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
     if (pathname.startsWith("/dashboard/landlord") && role !== "LANDLORD") {
-      return NextResponse.redirect(new URL(ROLE_HOME[role] ?? "/", req.url));
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
     if (pathname.startsWith("/dashboard/admin") && role !== "ADMIN") {
-      return NextResponse.redirect(new URL(ROLE_HOME[role] ?? "/", req.url));
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
   }
 
