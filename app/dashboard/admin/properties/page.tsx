@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { requireUser } from "@/actions/auth.actions";
 import { getAllPropertiesAdmin } from "@/actions/admin.actions";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { PropertyStatusBadge } from "@/components/status-badge";
 import { PaginationBar } from "@/components/pagination-bar";
 import { formatCurrency } from "@/lib/utils";
@@ -16,13 +23,21 @@ export default async function AdminPropertiesPage({ searchParams }: PageProps) {
   const page = Number(sp.page ?? 1);
   const limit = 10;
 
-  const { data: properties, meta } = await getAllPropertiesAdmin({ page, limit });
-  const totalPages = meta?.totalPages ?? Math.ceil((meta?.total ?? properties.length) / limit) ?? 1;
+  const { data: properties, meta } = await getAllPropertiesAdmin({
+    page,
+    limit,
+  });
+  const totalPages =
+    meta?.totalPages ??
+    Math.ceil((meta?.total ?? properties.length) / limit) ??
+    1;
 
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-tight">All properties</h1>
-      <p className="text-muted-foreground mt-1">{meta?.total ?? properties.length} listings across the platform</p>
+      <p className="text-muted-foreground mt-1">
+        {meta?.total ?? properties.length} listings across the platform
+      </p>
 
       <div className="mt-6 rounded-xl border">
         <Table>
@@ -38,12 +53,17 @@ export default async function AdminPropertiesPage({ searchParams }: PageProps) {
             {properties.map((p) => (
               <TableRow key={p.id}>
                 <TableCell>
-                  <Link href={`/properties/${p.id}`} className="font-medium hover:underline">
+                  <Link
+                    href={`/properties/${p.id}`}
+                    className="font-medium hover:underline"
+                  >
                     {p.title}
                   </Link>
                   <p className="text-muted-foreground text-xs">{p.location}</p>
                 </TableCell>
-                <TableCell className="text-muted-foreground">{p.landlord?.name ?? "—"}</TableCell>
+                <TableCell className="text-muted-foreground">
+                  {p.landlord?.name ?? "—"}
+                </TableCell>
                 <TableCell>{formatCurrency(p.price)}/mo</TableCell>
                 <TableCell>
                   <PropertyStatusBadge status={p.status} />
