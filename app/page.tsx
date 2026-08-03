@@ -22,14 +22,18 @@ export default async function HomePage() {
               <Sparkles className="size-3.5" /> Rental marketplace, reimagined
             </Badge>
             <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-6xl">
-              Find your next home, <span className="text-primary">without the hassle</span>
+              Find your next home,{" "}
+              <span className="text-primary">without the hassle</span>
             </h1>
             <p className="text-muted-foreground mx-auto mt-5 max-w-xl text-balance text-lg">
-              Browse verified rental listings, request move-ins, and pay securely — all
-              in one place.
+              Browse verified rental listings, request move-ins, and pay
+              securely — all in one place.
             </p>
 
-            <form action="/properties" className="mx-auto mt-8 flex max-w-xl gap-2">
+            <form
+              action="/properties"
+              className="mx-auto mt-8 flex max-w-xl gap-2"
+            >
               <div className="relative flex-1">
                 <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
                 <Input
@@ -77,7 +81,9 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">Featured properties</h2>
+            <h2 className="text-2xl font-bold tracking-tight">
+              Featured properties
+            </h2>
             <p className="text-muted-foreground mt-1 text-sm">
               Freshly listed homes handpicked for you.
             </p>
