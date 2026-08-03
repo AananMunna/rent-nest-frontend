@@ -14,7 +14,9 @@ export default async function LandlordRequestsPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-tight">Rental requests</h1>
-      <p className="text-muted-foreground mt-1">Approve or reject incoming requests.</p>
+      <p className="text-muted-foreground mt-1">
+        Approve or reject incoming requests.
+      </p>
 
       <div className="mt-6 space-y-4">
         {requests.length === 0 ? (
@@ -31,7 +33,10 @@ export default async function LandlordRequestsPage() {
                 </Avatar>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold">{r.tenant.name}</p>
-                  <Link href={`/properties/${r.property.id}`} className="text-primary text-sm hover:underline">
+                  <Link
+                    href={`/properties/${r.property.id}`}
+                    className="text-primary text-sm hover:underline"
+                  >
                     {r.property.title}
                   </Link>
                   <p className="text-muted-foreground mt-1 text-xs">
@@ -39,7 +44,9 @@ export default async function LandlordRequestsPage() {
                     {r.moveOutDate ? ` – ${formatDate(r.moveOutDate)}` : ""}
                   </p>
                   {r.message && (
-                    <p className="text-muted-foreground mt-1 text-sm italic">&ldquo;{r.message}&rdquo;</p>
+                    <p className="text-muted-foreground mt-1 text-sm italic">
+                      &ldquo;{r.message}&rdquo;
+                    </p>
                   )}
                 </div>
                 <div className="flex items-center gap-3">
