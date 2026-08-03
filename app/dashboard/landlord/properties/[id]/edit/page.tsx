@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import { requireUser } from "@/actions/auth.actions";
 import { getCategories } from "@/actions/category.actions";
-import { getPropertyById, updatePropertyAction } from "@/actions/property.actions";
+import {
+  getPropertyById,
+  updatePropertyAction,
+} from "@/actions/property.actions";
 import { PropertyForm } from "@/components/property-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
